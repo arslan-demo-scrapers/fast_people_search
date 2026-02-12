@@ -1,6 +1,6 @@
 from urllib.parse import urlencode
 
-SCRAPEOPS_API_KEY = '199aba2e-46f4-4abd-ae2a-953c7980f4e6'
+SCRAPEOPS_API_KEY = 'YOUR_API_KEY'
 
 
 def get_scrapeops_url(url):
