@@ -5,9 +5,10 @@ from copy import deepcopy
 from scrapy import Request, Spider
 from scrapy.crawler import CrawlerProcess
 
-from fast_people_search.fast_people_search.utils import *
-from fast_people_search.fast_people_search.static_fields import *
 from fast_people_search.fast_people_search.services.proxy_service import get_scrapeops_url
+from fast_people_search.fast_people_search.static_fields import punctuation_re
+from fast_people_search.fast_people_search.utils import clean, get_phone_cols, get_name_parts, \
+    get_actual_url, decode_cloudflare_email, get_csv_rows, log_info, retry_invalid_response
 
 
 class FastPeopleSearchSpider(Spider):
@@ -15,7 +16,7 @@ class FastPeopleSearchSpider(Spider):
     base_url = 'https://www.fastpeoplesearch.com'
     person_url_t = 'https://www.fastpeoplesearch.com/people/{name}_{address}'
     address_t = '{streetAddress}, {addressLocality}, {addressRegion}, {postalCode}'
-    input_persons_filepath = 'PERSONS.csv'
+    input_persons_filepath = '../input/PERSONS.csv'
 
     csv_headers = [
         "name", "full name", "aka", "sur names", "age", "owners", "emails",
@@ -23,7 +24,7 @@ class FastPeopleSearchSpider(Spider):
     ]
 
     feeds = {
-        'scraped_person_results.json': {
+        '../output/scraped_person_results.json': {
             'format': 'json',
             'encoding': 'utf8',
             'store_empty': False,
@@ -61,7 +62,7 @@ class FastPeopleSearchSpider(Spider):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def start(self):
+    async def start(self):
         for person in get_csv_rows(self.input_persons_filepath)[:1]:
             if not person or not clean(person['NAME']):
                 continue
@@ -71,7 +72,7 @@ class FastPeopleSearchSpider(Spider):
             url = self.person_url_t.format(name=name, address=address).lower()
             person['name'] = person.pop('NAME').strip()
 
-            meta = deepcopy(req_meta)
+            meta = deepcopy(self.req_meta)
             meta['person'] = person
             yield Request(self.get_proxy_url(url), meta=meta, dont_filter=True, headers=self.headers)
 
@@ -113,7 +114,7 @@ class FastPeopleSearchSpider(Spider):
 
             # if self.filter_person.is_inserted_in_master(item):
             #     continue
-            meta = deepcopy(req_meta)
+            meta = deepcopy(self.req_meta)
             meta['person'] = item
             yield response.follow(url=self.get_proxy_url(person['url']), callback=self.parse_person,
                                   meta=meta, dont_filter=True, headers=self.headers)
