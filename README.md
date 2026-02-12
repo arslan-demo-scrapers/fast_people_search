@@ -9,7 +9,6 @@
 
 ---
 
-
 # Web Scraper Usage Guide
 
 ## Prerequisites
@@ -41,18 +40,11 @@
    Or install them individually:
 
    ```sh
-   pip install Scrapy==2.11.1
-   pip install selenium==3.141.0
-   pip install webdriver-manager==2.5.1
-   pip install undetected-chromedriver==3.0.1
-   pip install chromedriver_autoinstaller
+   pip install Scrapy==2.13.4
    pip install scrapeops-scrapy
-   pip install playsound
+   pip install mysql-connector-python~=8.0.28
    pip install twilio
-   pip install oauth2client==4.1.3
-   pip install gspread
    ```
-
 
 ---
 
@@ -61,7 +53,7 @@
 1. Open the terminal/command prompt and navigate to the project directory:
 
    ```sh
-   cd "cesar_scrapers/cesar_scrapers/spiders"
+   cd "fast_people_search/fast_people_search/spiders"
    ```
 
 2. Run the script using syntax:
@@ -72,22 +64,21 @@
 
    **OR**
 
-   Open `tps_spider.py` in PyCharm, right-click on it, and select the `Run` option.
+   Open `fast_people_search_spider.py` in PyCharm, right-click on it, and select the `Run` option.
 
 **Note:**
 
 Make sure you are in the project spiders directory:
 
 ```
-/cesar_scrapers/cesar_scrapers/spiders/
+/fast_people_search/fast_people_search/spiders/
 ```
 
 ---
 
 ## Step 3: Output Location
 
-After successful execution, the script will search, extract, filter and store the matched .
-results in database tables.
+After successful execution, the script will search, extract, filter and store the results in JSON file, located in `ouput` folder.
 
 ---
 
@@ -95,5 +86,6 @@ results in database tables.
 
 If you have any questions regarding the script, please inbox me. I'd be happy to assist you!
 
-Many thanks!
+**Many thanks!**
 
+**Best**, Arslan
