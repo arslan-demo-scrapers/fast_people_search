@@ -1,11 +1,11 @@
 # Web Scraper Setup On New System, Quick Guide
 
-- **Install IDE**  
-- **Create Virtual Environment**  
-- **Install MYSQL Server**  
-- **Install MYSQL WorkBench**  
-- **Create Database & Tables**  
-- **Add Spiders Configuration**  
+- **Install IDE**
+- **Create Virtual Environment**
+- **Install MYSQL Server**
+- **Install MYSQL WorkBench**
+- **Create Database & Tables**
+- **Add Spiders Configuration**
 
 ---
 
@@ -14,7 +14,8 @@
 ## Prerequisites
 
 - **Python Version:** Ensure you have Python 3.9 or later installed.
-- **IDE Recommendation:** Download and install [PyCharm Community Edition](https://www.jetbrains.com/pycharm/download/) for managing Python projects.
+- **IDE Recommendation:** Download and install [PyCharm Community Edition](https://www.jetbrains.com/pycharm/download/)
+  for managing Python projects.
 
 ---
 
@@ -23,7 +24,8 @@
 1. **Install PyCharm** and open the project folder.
 2. Navigate to `Project Interpreter` and create a new virtual environment.
 
-   Alternatively, check this guide for setting up a virtual environment on [Windows/Linux](https://www.geeksforgeeks.org/creating-python-virtual-environment-windows-linux/?ref=lbp).
+   Alternatively, check this guide for setting up a virtual environment
+   on [Windows/Linux](https://www.geeksforgeeks.org/creating-python-virtual-environment-windows-linux/?ref=lbp).
 
 3. **Upgrade pip** to the latest version by running:
 
@@ -32,11 +34,11 @@
    ```
 
 4. **Install required dependencies:**
-   
+
    ```sh
    pip install -r requirements.txt
    ```
-   
+
    Or install them individually:
 
    ```sh
@@ -48,7 +50,26 @@
 
 ---
 
-## Step 2: Running the Script
+
+---
+
+## Step 2. Environment Variables (.env Setup)
+
+Create a `.env` file in the project root directory (same level as `scrapy.cfg`) and add:
+
+```env
+SCRAPEOPS_API_KEY=your_api_key_here
+```
+
+> Replace `your_api_key_here` with your personal ScrapeOps proxy API key.
+
+**Important:**
+
+* The `.env` file must be placed in the project root directory.
+
+---
+
+## Step 3: Running the Script
 
 1. Open the terminal/command prompt and navigate to the project directory:
 
@@ -76,9 +97,18 @@ Make sure you are in the project spiders directory:
 
 ---
 
-## Step 3: Output Location
+## Step 4: Output Location
 
-After successful execution, the script will search, extract, filter and store the results in JSON file, located in `ouput` folder.
+After successful execution, the script will search, extract, filter and store the results in JSON file, located
+in `ouput` folder.
+
+---
+
+### Notes
+
+* Ensure your virtual environment is activated before running the spider.
+* Ensure the `.env` file contains your `SCRAPEOPS_API_KEY`.
+* Confirm MySQL is running if database storage is enabled.
 
 ---
 
