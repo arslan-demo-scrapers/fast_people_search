@@ -5,10 +5,11 @@ from copy import deepcopy
 from scrapy import Request, Spider
 from scrapy.crawler import CrawlerProcess
 
-from fast_people_search.fast_people_search.services.proxy_service import get_scrapeops_url
-from fast_people_search.fast_people_search.static_fields import punctuation_re
-from fast_people_search.fast_people_search.utils import clean, get_phone_cols, get_name_parts, \
-    get_actual_url, decode_cloudflare_email, get_csv_rows, log_info, retry_invalid_response
+from fast_people_search.fast_people_search.utils.data_utils import get_name_parts, decode_cloudflare_email
+from fast_people_search.fast_people_search.utils.file_utils import get_phone_cols, get_csv_rows
+from fast_people_search.fast_people_search.utils.spider_utils import log_info, get_actual_url, retry_invalid_response
+from fast_people_search.fast_people_search.utils.text_utils import clean
+from true_people_search.true_people_search.services.proxy_service import build_proxy_url
 
 
 class FastPeopleSearchSpider(Spider):
@@ -17,6 +18,8 @@ class FastPeopleSearchSpider(Spider):
     person_url_t = 'https://www.fastpeoplesearch.com/people/{name}_{address}'
     address_t = '{streetAddress}, {addressLocality}, {addressRegion}, {postalCode}'
     input_persons_filepath = '../input/PERSONS.csv'
+
+    punctuation_re = re.compile(r'[^\w \-]')
 
     csv_headers = [
         "name", "full name", "aka", "sur names", "age", "owners", "emails",
@@ -133,7 +136,7 @@ class FastPeopleSearchSpider(Spider):
             yield person
 
     def get_proxy_url(self, url):
-        return get_scrapeops_url(url)
+        return build_proxy_url(url)
 
     def get_phones_numbers(self, phone_numbers):
         phones = {}
