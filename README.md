@@ -59,7 +59,7 @@
 2. Run the script using syntax:
 
    ```sh
-   scrapy crawl <spider-name>
+   scrapy crawl fast_people_search_spider
    ```
 
    **OR**
