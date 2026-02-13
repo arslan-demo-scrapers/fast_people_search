@@ -1,11 +1,11 @@
 from urllib.parse import urlencode
 
-SCRAPEOPS_API_KEY = 'YOUR_API_KEY'
+from fast_people_search.fast_people_search.config.env_config import Config
 
 
 def get_scrapeops_url(url):
     payload = {
-        'api_key': SCRAPEOPS_API_KEY,
+        'api_key': Config.SCRAPEOPS_API_KEY,
         'url': url,
         # 'render_js': True,
         'country': 'us',
