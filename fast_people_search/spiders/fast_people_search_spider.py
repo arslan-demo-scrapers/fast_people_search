@@ -9,7 +9,7 @@ from fast_people_search.fast_people_search.utils.data_utils import get_name_part
 from fast_people_search.fast_people_search.utils.file_utils import get_phone_cols, get_csv_rows
 from fast_people_search.fast_people_search.utils.spider_utils import log_info, get_actual_url, retry_invalid_response
 from fast_people_search.fast_people_search.utils.text_utils import clean
-from true_people_search.true_people_search.services.proxy_service import build_proxy_url
+from fast_people_search.fast_people_search.services.proxy_service import build_proxy_url
 
 
 class FastPeopleSearchSpider(Spider):
@@ -69,8 +69,8 @@ class FastPeopleSearchSpider(Spider):
         for person in get_csv_rows(self.input_persons_filepath)[:1]:
             if not person or not clean(person['NAME']):
                 continue
-            name = re.sub(punctuation_re, '', person['NAME'] or '').strip().replace(' ', '-')
-            address = re.sub(punctuation_re, '', person['ADDRESS'] or '').strip().replace(' ', '-')
+            name = re.sub(self.punctuation_re, '', person['NAME'] or '').strip().replace(' ', '-')
+            address = re.sub(self.punctuation_re, '', person['ADDRESS'] or '').strip().replace(' ', '-')
 
             url = self.person_url_t.format(name=name, address=address).lower()
             person['name'] = person.pop('NAME').strip()
