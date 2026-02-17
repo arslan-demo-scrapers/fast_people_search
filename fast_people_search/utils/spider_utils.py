@@ -1,5 +1,6 @@
 import logging
 import time
+from urllib.parse import unquote
 
 
 def log_info(message):
@@ -7,7 +8,7 @@ def log_info(message):
 
 
 def get_actual_url(response):
-    return response.url.split('url=')[-1].split('&')[0]
+    return unquote(response.url.split('url=')[-1].split('&')[0])
 
 
 # def get_actual_url(response):
